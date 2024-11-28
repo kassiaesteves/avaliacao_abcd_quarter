@@ -33,7 +33,3 @@ else:
         func_data_page()
     elif pagina_selecionada == "Lista de Avaliados":
         func_data_nota()
-
-st.markdown(
-        unsafe_allow_html=True
-    )
