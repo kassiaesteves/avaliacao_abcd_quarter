@@ -180,7 +180,3 @@ def deletar_avaliado(conn, id_emp):
         st.success(f"Avaliador com ID {id_emp} deletado com sucesso!")
     except Exception as e:
         st.error(f"Erro ao deletar: {e}")
-
-    st.markdown(
-    unsafe_allow_html=True
-)
