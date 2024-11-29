@@ -8,9 +8,13 @@ from time import sleep
 from st_pages import hide_pages
 
 load_dotenv()
-DB_SERVER_HOSTNAME = os.getenv("DB_SERVER_HOSTNAME")
-DB_HTTP_PATH = os.getenv("DB_HTTP_PATH")
-DB_ACCESS_TOKEN = os.getenv("DB_ACCESS_TOKEN")
+#DB_SERVER_HOSTNAME = os.getenv("DB_SERVER_HOSTNAME")
+#DB_HTTP_PATH = os.getenv("DB_HTTP_PATH")
+#DB_ACCESS_TOKEN = os.getenv("DB_ACCESS_TOKEN")
+
+DB_SERVER_HOSTNAME = st.secrets("DB_SERVER_HOSTNAME")
+DB_HTTP_PATH = st.secrets("DB_HTTP_PATH")
+DB_ACCESS_TOKEN = st.secrets("DB_ACCESS_TOKEN")
 
 # Chave secreta para gerar o token JWT
 secret_key = "data"
