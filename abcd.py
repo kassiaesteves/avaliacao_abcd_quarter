@@ -121,30 +121,30 @@ def listar_avaliados(conn, quarter=None):
     cursor.close()
     return df
 
-# Buscar colaboradores e subordinados pelo Diretor_Gestor
+# Função para buscar os subordinados a partir da tabela específica do avaliador
 def buscar_funcionarios_subordinados():
-    id_diretor = st.session_state.get('id_emp', None)
+    id_gestor = st.session_state.get('id_emp', None)
 
-    if id_diretor:
+    if id_gestor:
         connection = conectar_banco()
         cursor = connection.cursor()
 
-        # Busca o nome do diretor logado
+        # Buscar o nome do avaliador com base no id_emp logado
         cursor.execute(f"""
             SELECT Nome
             FROM datalake.silver_pny.func_zoom
-            WHERE id = {id_diretor}
+            WHERE id = {id_gestor}
         """)
         resultado = cursor.fetchone()
 
         if resultado:
-            nome_diretor = resultado['Nome']
+            nome_gestor = resultado['Nome'].replace(" ", "_").lower()  # Substituir espaços por underline e deixar em minúsculas para nome da tabela
+            tabela_avaliador = f"tabela_{nome_gestor}"  # Nome da tabela baseado no avaliador
 
-            # Agora busca os funcionários subordinados ao diretor logado
+            # Agora busca os funcionários da tabela específica do avaliador
             cursor.execute(f"""
-                SELECT id, Nome, Setor, Diretor_Gestor
-                FROM datalake.silver_pny.func_zoom
-                WHERE Diretor_Gestor = '{nome_diretor}'
+                SELECT id_employee, Nome
+                FROM {tabela_avaliador}
             """)
             funcionarios = cursor.fetchall()
 
@@ -152,10 +152,9 @@ def buscar_funcionarios_subordinados():
             connection.close()
 
             # Retorna os funcionários como um dicionário
-            return {row['id']: row['Nome'] for row in funcionarios}
+            return {row['id_employee']: row['Nome'] for row in funcionarios}
 
     return {}
-
 
 def abcd_page():
     # Verifica se o usuário está logado
