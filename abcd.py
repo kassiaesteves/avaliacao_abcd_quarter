@@ -29,6 +29,7 @@ def buscar_colaboradores():
           Nome AS nm_employee,
           Setor AS nm_departament,
           Gestor_Direto AS nm_gestor,
+          Diretor_Gestor as nm_diretor,
           Diretoria AS nm_diretoria
         FROM
           datalake.silver_pny.func_zoom
@@ -36,7 +37,7 @@ def buscar_colaboradores():
     colaboradores = cursor.fetchall()
     cursor.close()
     connection.close()
-    return {row['nm_employee']: {'id': row['id_employee'], 'departament': row['nm_departament'], 'gestor': row['nm_gestor'], 'diretoria': row['nm_diretoria']} for row in colaboradores}
+    return {row['nm_employee']: {'id': row['id_employee'], 'departament': row['nm_departament'],'diretor': row['nm_diretor'], 'gestor': row['nm_gestor'], 'diretoria': row['nm_diretoria']} for row in colaboradores}
 
 # Função para buscar o id do gestor selecionado
 def buscar_id_gestor(nome_gestor):
@@ -308,28 +309,33 @@ def abcd_page():
     # Inputs de informações do colaborador
     cols_inputs = st.columns(2)
 
-    with cols_inputs[0]:
-        nome_colaborador = st.selectbox("Nome do Colaborador", options=[""] + list(colaboradores_data.keys()))
-        if nome_colaborador:
-            id_emp = colaboradores_data[nome_colaborador]['id']
-        else:
-            id_emp = None
+with cols_inputs[0]:
+    nome_colaborador = st.selectbox("Nome do Colaborador", options=[""] + list(colaboradores_data.keys()))
+    if nome_colaborador:
+        id_emp = colaboradores_data[nome_colaborador]['id']
+    else:
+        id_emp = None
 
-    with cols_inputs[1]:
-        nome_gestor = st.text_input("Nome do Gestor", value=colaboradores_data[nome_colaborador]['gestor'] if nome_colaborador else "", disabled=True)
+with cols_inputs[1]:
+    nome_gestor = st.text_input("Líder Direto", value=colaboradores_data[nome_colaborador]['gestor'] if nome_colaborador else "", disabled=True)
 
-    cols_inputs2 = st.columns(2)
+cols_inputs2 = st.columns(2)
 
-    with cols_inputs2[0]:
-        setor = st.selectbox("Setor", options=[colaboradores_data[nome_colaborador]['departament']] if nome_colaborador else [""])
+with cols_inputs2[0]:
+    setor = st.selectbox("Setor", options=[colaboradores_data[nome_colaborador]['departament']] if nome_colaborador else [""])
 
-    with cols_inputs2[1]:
-        diretoria = st.text_input("Diretoria", value=colaboradores_data[nome_colaborador]['diretoria'] if nome_colaborador else "", disabled=True)
+with cols_inputs2[1]:
+    diretoria = st.text_input("Diretoria", value=colaboradores_data[nome_colaborador]['diretoria'] if nome_colaborador else "", disabled=True)
 
-    cols_date = st.columns([1, 3])
+# Adicionando o campo do Diretor para exibir na tela
+with cols_inputs2[0]:
+    nome_diretor = st.text_input("Diretor Responsável", value=colaboradores_data[nome_colaborador]['diretor'] if nome_colaborador else "", disabled=True)
 
-    with cols_date[0]:
-        data_resposta = st.date_input("Data da Resposta", value=datetime.today(), format="DD-MM-YYYY")
+cols_date = st.columns([1, 3])
+
+with cols_date[0]:
+    data_resposta = st.date_input("Data da Resposta", value=datetime.today(), format="DD-MM-YYYY")
+
 
     # Verifica se o colaborador selecionado é subordinado do gestor logado
     if nome_colaborador and id_emp in subordinados_data:
