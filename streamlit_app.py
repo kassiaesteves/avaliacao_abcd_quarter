@@ -5,8 +5,7 @@ from alter_nota import func_data_nota
 from st_pages import hide_pages
 import urllib.parse
 
-#link_abcd_base = "https://avaliacao-abcd.streamlit.app"  
-link_abcd_base = "https://redirect-avaliacao-abcd.streamlit.app"
+link_abcd_base = "https://aplicacao.streamlit.app"  
 
 if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
@@ -34,3 +33,17 @@ else:
         func_data_page()
     elif pagina_selecionada == "Lista de Avaliados":
         func_data_nota()
+
+st.markdown(
+        """
+        <br><hr>
+        <div style='text-align: center;'>
+            Desenvolvido por 
+            <a href='https://www.linkedin.com/in/gabriel-cordeiro-033641144/' target='_blank' style='text-decoration: none; color: #0A66C2;'>
+                Gabriel Cordeiro
+                <img src='https://upload.wikimedia.org/wikipedia/commons/f/f8/LinkedIn_icon_circle.svg' alt='LinkedIn' width='20' style='vertical-align: middle; margin-right: 5px;' />
+            </a>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )

@@ -103,10 +103,6 @@ def func_data_page():
 
     else:
         st.error("Não foi possível conectar ao banco de dados.")
-    st.markdown(
-        unsafe_allow_html=True
-    )
-
 
 def adicionar_pessoa(conn, nome, setor, gestor_direto, diretor_gestor, diretoria):
     query_id = "SELECT MAX(id) FROM datalake.silver_pny.func_zoom"

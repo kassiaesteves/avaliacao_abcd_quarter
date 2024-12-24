@@ -149,10 +149,6 @@ def func_data_nota():
     else:
         st.error("Não foi possível conectar ao banco de dados.")
     
-    st.markdown(
-        unsafe_allow_html=True
-    )
-
 
 def buscar_por_nome(conn, nome, subordinados):
     ids_subordinados = tuple(subordinados.keys())
