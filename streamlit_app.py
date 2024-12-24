@@ -5,7 +5,8 @@ from alter_nota import func_data_nota
 from st_pages import hide_pages
 import urllib.parse
 
-link_abcd_base = "https://avaliacao-abcd.streamlit.app"  
+#link_abcd_base = "https://avaliacao-abcd.streamlit.app"  
+link_abcd_base = "https://redirect-avaliacao-abcd.streamlit.app/"
 
 if 'logged_in' not in st.session_state:
     st.session_state['logged_in'] = False
