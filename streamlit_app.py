@@ -4,7 +4,6 @@ from func_data import func_data_page
 from alter_nota import func_data_nota
 from st_pages import hide_pages
 import urllib.parse
-import buscar_colaboradores
 
 link_abcd_base = "https://redirect-avaliacao-abcd.streamlit.app/"  
 
@@ -24,23 +23,14 @@ else:
         ["Avaliação ABCD", "Funcionários Data"]
     )
 
-if pagina_selecionada == "Funcionários Data":
-    if "id_emp" in st.session_state:
+    if pagina_selecionada == "Avaliação ABCD":
         user_id = st.session_state["id_emp"]
-        colaboradores = buscar_colaboradores(user_id)  # Passe user_id corretamente
-        st.write("Colaboradores disponíveis:")
-        st.json(colaboradores)
-    else:
-        st.error("ID do usuário não encontrado. Faça login novamente.")
-
-    #if pagina_selecionada == "Avaliação ABCD":
-        #user_id = st.session_state["id_emp"]
-        #link_abcd = f"{link_abcd_base}?user_id={urllib.parse.quote(str(user_id))}"
+        link_abcd = f"{link_abcd_base}?user_id={urllib.parse.quote(str(user_id))}"
 
         #st.write("Redirecionando para a página principal...")
-        #st.markdown(f"[Clique aqui para Realizar Avaliação.]({link_abcd})", unsafe_allow_html=True)
+        st.markdown(f"[Clique aqui para Realizar Avaliação.]({link_abcd})", unsafe_allow_html=True)
 
-    #elif pagina_selecionada == "Funcionários Data":
-        #func_data_page()
+    elif pagina_selecionada == "Funcionários Data":
+        func_data_page()
     #elif pagina_selecionada == "Lista de Avaliados":
         #func_data_nota()
