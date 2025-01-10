@@ -1,4 +1,6 @@
 import streamlit as st
+import jwt
+import datetime
 from databricks import sql
 from dotenv import load_dotenv
 import os
@@ -9,6 +11,9 @@ load_dotenv()
 DB_SERVER_HOSTNAME = os.getenv("DB_SERVER_HOSTNAME")
 DB_HTTP_PATH = os.getenv("DB_HTTP_PATH")
 DB_ACCESS_TOKEN = os.getenv("DB_ACCESS_TOKEN")
+
+# Chave secreta para gerar o token JWT
+secret_key = "data"
 
 # Função para conectar ao banco de dados
 def conectar_banco():
@@ -33,6 +38,28 @@ def verificar_login(username, password):
     
     # Verifica se o login foi bem-sucedido e retorna o id_emp
     return resultado['id_emp'] if resultado else None
+
+def gerar_token(user_id):
+    token = jwt.encode(
+        {
+            "user_id": user_id,
+            "exp": datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=24)
+        },
+        secret_key,
+        algorithm="HS256"
+    )
+    return token
+
+def salvar_token_no_banco(user_id, token):
+    connection = conectar_banco()
+    cursor = connection.cursor()
+    cursor.execute(f"""
+        INSERT INTO datalake.avaliacao_abcd.tokens (user_id, token, created_at)
+        VALUES ('{user_id}', '{token}', '{datetime.datetime.now()}')
+    """)
+    connection.commit()
+    cursor.close()
+    connection.close()
 
 def login_page():
     if not st.session_state.get("logged_in", False):
