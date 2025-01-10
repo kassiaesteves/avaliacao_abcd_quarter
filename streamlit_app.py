@@ -27,7 +27,7 @@ else:
         user_id = st.session_state["id_emp"]
         link_abcd = f"{link_abcd_base}?user_id={urllib.parse.quote(str(user_id))}"
 
-        #st.write("Redirecionando para a página principal...")
+        st.write("Redirecionando para a página principal...")
         st.markdown(f"[Clique aqui para Realizar Avaliação.]({link_abcd})", unsafe_allow_html=True)
 
     elif pagina_selecionada == "Funcionários Data":
