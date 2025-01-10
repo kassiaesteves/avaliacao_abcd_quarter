@@ -19,8 +19,7 @@ else:
     st.sidebar.title("Navegação")
     pagina_selecionada = st.sidebar.selectbox(
         "Escolha a página",
-        #["Avaliação ABCD", "Funcionários Data", "Lista de Avaliados"]
-        ["Avaliação ABCD", "Funcionários Data"]
+        ["Avaliação ABCD", "Funcionários Data", "Lista de Avaliados"]
     )
 
     if pagina_selecionada == "Avaliação ABCD":
@@ -32,5 +31,19 @@ else:
 
     elif pagina_selecionada == "Funcionários Data":
         func_data_page()
-    #elif pagina_selecionada == "Lista de Avaliados":
-        #func_data_nota()
+    elif pagina_selecionada == "Lista de Avaliados":
+        func_data_nota()
+
+#st.markdown(
+        #"""
+        #<br><hr>
+        #<div style='text-align: center;'>
+            #Desenvolvido por 
+            #<a href='https://www.linkedin.com/in/gabriel-cordeiro-033641144/' target='_blank' style='text-decoration: none; color: #0A66C2;'>
+                #Gabriel Cordeiro
+                #<img src='https://upload.wikimedia.org/wikipedia/commons/f/f8/LinkedIn_icon_circle.svg' alt='LinkedIn' width='20' style='vertical-align: middle; margin-right: 5px;' />
+            #</a>
+        #</div>
+        #""",
+        #unsafe_allow_html=True
+    #)
