@@ -19,7 +19,7 @@ else:
     st.sidebar.title("Navegação")
     pagina_selecionada = st.sidebar.selectbox(
         "Escolha a página",
-        #["Avaliação ABCD", "Funcionários Data", "Lista de Avaliados"]
+        ["Avaliação ABCD", "Funcionários Data", "Lista de Avaliados"]
         ["Avaliação ABCD", "Funcionários Data"]
     )
 
