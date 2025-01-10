@@ -32,5 +32,5 @@ else:
 
     elif pagina_selecionada == "Funcionários Data":
         func_data_page()
-    #elif pagina_selecionada == "Lista de Avaliados":
-        #func_data_nota()
+    elif pagina_selecionada == "Lista de Avaliados":
+        func_data_nota()
